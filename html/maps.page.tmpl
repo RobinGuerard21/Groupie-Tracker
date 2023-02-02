@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/static/css/style.min.css" rel="stylesheet">
+    <title>Map</title>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css' rel='stylesheet' />
+
+</head>
+<body>
+<div class="header-fix">
+    <div class="right">
+        <a class="link" href="index">Accueil</a>
+        <a class="link" href="artist">Artiste</a>
+        <a class="link active" href="map">Map</a>
+    </div>
+</div>
+<a class="logo" href="">Groupie Tracker</a>
+<div class="main maps">
+    <div id='map'></div>
+</div>
+
+<script>
+    var artistes = {{.Artist}}
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    mapboxgl.accessToken = 'pk.eyJ1Ijoicm9iMjFydW5uZXIiLCJhIjoiY2tvbDU1MHo0MWI0djJ3cm10dDdqNnFwYSJ9.YHyoYFUsIVyNzz4D8p_76w';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11'
+    });
+
+    for (i in artistes) {
+        if (urlParams.has("artist")){
+            if (urlParams.get("artist") == artistes[i].Name) {
+                for (y in artistes[i].Locations) {
+                    fetching(i,y)
+                }
+            }
+        } else {
+            for (y in artistes[i].Locations) {
+                fetching(i,y)
+            }
+        }
+
+
+    }
+
+    function fetching(i, y) {
+        fetch('https://api.mapbox.com/geocoding/v5/mapbox.places/'+ artistes[i].Locations[y] +'.json?access_token=pk.eyJ1Ijoicm9iMjFydW5uZXIiLCJhIjoiY2tvbDU1MHo0MWI0djJ3cm10dDdqNnFwYSJ9.YHyoYFUsIVyNzz4D8p_76w')
+            .then((res) => res.json())
+            .then(function (data) {
+                var marker = new mapboxgl.Marker()
+                    .setLngLat(data.features[0].center)
+                    .setPopup(new mapboxgl.Popup().setHTML("<h1>"+artistes[i].Name+"</h1><h3>"+artistes[i].Relation[artistes[i].Locations[y]][0]+"</h3>"))
+                    .addTo(map)
+                console.log(i)
+
+            })
+            .catch(function (err) {
+                console.log(err)
+            })
+    }
+</script>
+</body>
+</html>

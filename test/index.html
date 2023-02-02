@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE-edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Accueil</title>
+</head>
+<style>
+  @font-face {
+    font-family: "Marianne";
+    src: url("Marianne-Regular.otf");
+  }
+  @font-face {
+    font-family: "Marianne Medium";
+    src: url("Marianne-Medium.otf");
+  }
+  @font-face {
+    font-family: "Marianne Bold";
+    src: url("Marianne-Bold.otf");
+  }
+  @font-face {
+    font-family: "Marianne ExtraBold";
+    src: url("Marianne-ExtraBold.otf");
+  }
+
+  body {
+    font-family: "Marianne";
+    background: #353B48;
+    overflow-x: hidden;
+    margin: 0px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .header-fix {
+    z-index: 10;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: #353B48;
+    height: 80px;
+    width: -webkit-fill-available;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-fix .right .link {
+    font-family: 'Marianne Medium';
+    margin-left: 50px;
+    color: #F5F6FA;
+    font-size: 24px;
+  }
+
+  .logo {
+    font-family: 'Marianne Bold';
+    position: fixed;
+    color: #F5F6FA;
+    top: 23.5px;
+    right: 50px;
+    width: 200px;
+    font-size: 24px;
+    text-align: center;
+    z-index: 10;
+    transition: all 3s ease-in-out;
+  }
+
+  .logo.Beggin {
+    top: 100px;
+    right: 25vw;
+    width: 50vw;
+    font-size: 96px;
+  }
+
+  .triangle {
+    height: 0;
+    width: 0;
+    margin-top: 200px;
+    border-bottom: 200px solid #2F3640;
+    border-right: 100vw solid transparent;
+  }
+
+  .main {
+    height: 200vh;
+    width: -webkit-fill-available;
+    background: #2F3640;
+  }
+
+  .link {
+
+  }
+</style>
+<body>
+<div class="header-fix">
+  <div class="right">
+    <a class="link" href="">Accueil</a>
+    <a class="link" href="">Artiste</a>
+    <a class="link" href="">Map</a>
+  </div>
+</div>
+<a class="logo Beggin" href="">Groupie Tracker</a>
+<div class="triangle"></div>
+<div class="main"></div>
+<script>
+  var logo = document.querySelector(".logo");
+
+  window.addEventListener("scroll",() => {
+    console.log(window.pageYOffset);
+    if(window.pageYOffset > 20 && logo.classList.contains("Beggin")) {
+      logo.classList.remove("Beggin");
+    }
+    if(window.pageYOffset <= 20 && !logo.classList.contains("Beggin")) {
+      logo.classList.add("Beggin");
+    }
+  })
+</script>
+</body>
+</html>
